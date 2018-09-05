@@ -16,17 +16,14 @@ var requestHandler = function(request, response) {
     HINT: explore the request object and its properties 
     http://stackoverflow.com/questions/17251553/nodejs-request-object-documentation
    */
-   const MYJSON = require('./myJson')
-	http.createServer((request, response) => {
-		if (request.method === 'GET' && request.url === '/') {
-
-			response.end(JSON.stringify(MYJSON));
-		} 
-		else {
+	if (url.parse(request.url).pathname == 'GET') {
+		response.writeHead(200, {'Content-Type': 'application/JSON'});
+		response.write('JSON files here');
+		response.end();
+	else {
 			response.statusCode = 404;
 			response.end();
-		}
-	}).listen(8080);
+	}
 };
 
 fs.readFile('listings.json', 'utf8', function(err, data) {
@@ -34,4 +31,12 @@ fs.readFile('listings.json', 'utf8', function(err, data) {
     This callback function should save the data in the listingData variable, 
     then start the server. 
    */
+   if (err) {
+	   console.log("There was some error reading listings.json");
+	   return;
+   }
+   var server = http.createServer(requestHandler);
+   server.listen(port, function() {
+	   console.log("Server is listening on: http://localhost:" + port);
+   });
 });
