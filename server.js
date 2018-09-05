@@ -22,7 +22,7 @@ var requestHandler = function(request, response) {
 		response.end();
 	}	
 	else {
-			response.writeHead(404, {"Content-Type": "text/plain}); 
+			response.writeHead(404, {'Content-Type': 'text/plain'}); 
 			response.end();
 	}
 };
