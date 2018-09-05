@@ -38,6 +38,6 @@ fs.readFile('listings.json', 'utf8', function(err, data) {
    }
    var server = http.createServer(requestHandler);
    server.listen(port, function() {
-	   console.log("Server is listening on: http://127.0.0.1:' + port);
+	   console.log("Server is listening on: http://127.0.0.1:" + port);
    });
 });
