@@ -20,7 +20,7 @@ var requestHandler = function(request, response) {
 		response.writeHead(200, {'Content-Type': 'application/JSON'});
 		response.write('JSON files here');
 		response.end();
-	else {
+	else{
 			response.statusCode = 404;
 			response.end();
 	}
