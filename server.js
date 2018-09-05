@@ -16,13 +16,13 @@ var requestHandler = function(request, response) {
     HINT: explore the request object and its properties 
     http://stackoverflow.com/questions/17251553/nodejs-request-object-documentation
    */
-	if (url.parse(request.url).pathname == 'GET') {
+	if (url.parse(request.url).pathname == '/listings') {
 		response.writeHead(200, {'Content-Type': 'application/JSON'});
-		response.write('JSON files here');
+		response.write((listingData);
 		response.end();
-	}	
-	else {
-			response.writeHead(404, {'Content-Type': 'text/plain'}); 
+	}
+	else{
+			response.writeHead(404, {'Content-Type': 'text/plain'});
 			response.end();
 	}
 };
@@ -33,11 +33,11 @@ fs.readFile('listings.json', 'utf8', function(err, data) {
     then start the server. 
    */
    if (err) {
-	   console.log("There was some error reading listings.json");
+	   console.log("There was some error reading listings.js");
 	   return;
    }
    var server = http.createServer(requestHandler);
    server.listen(port, function() {
-	   console.log("Server is listening on: http://127.0.0.1:" + port);
-   });
+	   console.log('Server is listening on http://localhost:' + port);
+   }
 });
