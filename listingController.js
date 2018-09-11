@@ -1,52 +1,50 @@
-angular.module('listings').controller('ListingsController', ['$scope', 'Listings', 
+angular.module('listings').controller('ListingsController', ['$scope', 'Listings',
   function($scope, Listings) {
     $scope.listings = Listings;
     $scope.detailedInfo = undefined;
-    
-    $scope.freshListing = {
-        coordinates: {
-          latitude: 0,
-          longitutde: 0
+
+    $scope.newListing = {
+      entries : [
+        {
+          "code": "",
+          "name": "",
+          "coordinates": {
+            "latitude": 0,
+            "longitude": 0
+          },
+          "address": ""
         }
-    };
-      
-    &scope.test = function(message) {
-       console.log(message);
-    };
-    
-    var clearForm = function() {
-      $scope.freshListing.code = '';
-      $scope.freshListing.name = '';
-      $scope.freshlisting.coordinates.latitude = 0;
-      $scope.freshListing.coordinates.longitude = 0;
-      $scope.freshListing.address = '';
-    };
-    
-    clearForm();
+      ]
+    }
+
+    /*
+      Implement these functions in the controller to make your application function
+      as described in the assignment spec.
+     */
 
     $scope.addListing = function() {
-      var newListingInsert = {
-        name: $scope.freshListing.name,
-        code: $scope.freshListing.code,
-        address: $scope.freshListing.address,
-        coordinates: {
-          latitude: $scope.freshListing.coordinates.latitude,
-          longitutde: $scope.freshListing.coordinates.longitude
-        }
-      }
-      $scope.listings.push(newListingInsert);
-      clearForm();
+      if ($scope.addlisting.$valid)
+        $scope.listings.push($scope.newListing);
+      $scope.newListing = {};
+      $scope.addlisting.$setPristine();
     };
-    
-    $scope.deleteListing = function(index) {
+
+    $scope.deleteListing = function(entries) {
+      var index = $scope.listings.indexOf(entries);
       $scope.listings.splice(index, 1);
-      $scope.selectedIndex = -1;
-      $scope.detailedInfo = {};
     };
-    
-    $scope.showDetails = function(index) {
-      $scope.detailedInfo = $scope.listings[index];
-      $scope.selectedIndex = index;
+
+    $scope.showDetails = function(entries) {
+      if (entries.coordinates === undefined) {
+        entries.coordinates = "N/A";
+      }
+      else {
+        var coordinates = "Latitude: " entries.coordinates.latitude + ", Longitude: " + entries.coordinates.longitude
+        entries.coordinates = coordinates;
+      }
+      if (entries.address === undefined)
+        entries.address = "N/A";
+      $scope.detailedInfo = entries;
     };
   }
 ]);
